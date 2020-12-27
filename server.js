@@ -26,7 +26,14 @@ app.get("/", (req,res)=>{
 });
 ""
 app.post("/signin",(req,res)=>{
-res.send("signing!");
+
+    if(req.body.email === database[0].email && req.body.password === database[0].password){
+        res.send("success!");
+    }
+else{
+    res.send("error!");
+}
+
 });
 
 app.listen(3000, ()=>{
