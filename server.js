@@ -24,7 +24,7 @@ const database = [
 app.get("/", (req, res) => {
   res.send("Hello from the backend!");
 });
-("");
+
 app.post("/signin", (req, res) => {
   if (
     req.body.email === database[0].email &&
@@ -34,6 +34,10 @@ app.post("/signin", (req, res) => {
   } else {
     res.status(404).json("error!");
   }
+});
+
+app.post("/register",(req.res)=>{
+
 });
 
 app.listen(3000, () => {
