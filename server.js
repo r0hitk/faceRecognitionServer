@@ -24,7 +24,7 @@ const database = {
 };
 
 app.get("/", (req, res) => {
-  res.send("Hello from the backend!");
+  res.send(database.users);
 });
 
 app.post("/signin", (req, res) => {
@@ -49,7 +49,7 @@ app.post("/register", (req, res) => {
     joined: new Date(),
   });
 
-  res.json(database.users[1]);
+  res.json(database.users[database.users.length-1]);
 });
 
 app.listen(3000, () => {
