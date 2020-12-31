@@ -1,7 +1,9 @@
 const express = require("express");
 
 const app = express();
+
 app.use(express.json());
+
 const database = {
   users: [
     {
@@ -49,7 +51,23 @@ app.post("/register", (req, res) => {
     joined: new Date(),
   });
 
-  res.json(database.users[database.users.length-1]);
+  res.json(database.users[database.users.length - 1]);
+});
+
+app.get("/profile/:id", (req, res) => {
+  const { id } = req.params;
+  let intId = Number(id);
+  console.log(typeof intId);
+  let found = false;
+  database.users.forEach((user) => {
+    if (user.id === id) {
+      found = true;
+      return res.json(user);
+    }
+  });
+  if (!found) {
+      res.json("no such user!");
+  }
 });
 
 app.listen(3000, () => {
