@@ -57,16 +57,15 @@ app.post("/register", (req, res) => {
 app.get("/profile/:id", (req, res) => {
   const { id } = req.params;
   let intId = Number(id);
-  console.log(typeof intId);
   let found = false;
   database.users.forEach((user) => {
-    if (user.id === id) {
+    if (user.id === intId) {
       found = true;
       return res.json(user);
     }
   });
   if (!found) {
-      res.json("no such user!");
+      res.status(404).json("no such user!");
   }
 });
 
