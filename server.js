@@ -1,6 +1,7 @@
 const express = require("express");
-
 const app = express();
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 app.use(express.json());
 
@@ -23,6 +24,13 @@ const database = {
       joined: new Date(),
     },
   ],
+  login: [
+    {
+      id: 123,
+      hash: "",
+      email: "rohit@gmail.com",
+    },
+  ],
 };
 
 app.get("/", (req, res) => {
@@ -42,6 +50,11 @@ app.post("/signin", (req, res) => {
 
 app.post("/register", (req, res) => {
   const { email, name, password } = req.body;
+
+  bcrypt.hash(password, saltRounds, (err,hash)=>{
+    console.log(hash);
+  });
+
   database.users.push({
     id: 153,
     name: name,
