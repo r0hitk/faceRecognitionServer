@@ -65,7 +65,23 @@ app.get("/profile/:id", (req, res) => {
     }
   });
   if (!found) {
-      res.status(404).json("no such user!");
+    res.status(404).json("no such user!");
+  }
+});
+
+app.put("/image", (req, res) => {
+  const { id } = req.body;
+  let intId = Number(id);
+  let found = false;
+  database.users.forEach((user) => {
+    if (user.id === intId) {
+      found = true;
+      user.entries++;
+      return res.json(user.entries);
+    }
+  });
+  if (!found) {
+    res.status(404).json("no such user!");
   }
 });
 
