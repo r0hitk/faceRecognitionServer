@@ -42,10 +42,10 @@ app.get("/", (req, res) => {
 app.post("/signin", (req, res) => {
   console.log(req.body);
   if (
-    req.body.email === database.users[0].email &&
-    req.body.password === database.users[0].password
+    req.body.email === database.users[database.users.length - 1].email &&
+    req.body.password === database.users[database.users.length - 1].password
   ) {
-    res.json(database.users[0]);
+    res.json(database.users[database.users.length-1]);
   } else {
     res.status(400).json("error!");
   }
@@ -70,6 +70,7 @@ app.post("/register", (req, res) => {
   res.json(database.users[database.users.length - 1]);
 });
 
+//can be implemented in future.
 app.get("/profile/:id", (req, res) => {
   const { id } = req.params;
   let intId = Number(id);
@@ -85,6 +86,7 @@ app.get("/profile/:id", (req, res) => {
   }
 });
 
+//gets a user id and updates the entry for that user.
 app.put("/image", (req, res) => {
   const { id } = req.body;
   let intId = Number(id);
