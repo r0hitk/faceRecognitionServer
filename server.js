@@ -84,20 +84,22 @@ app.post("/register", (req, res) => {
     .catch((err) => res.status(400).json(err));
 });
 
-//can be implemented in future.
+//can be implemented in future. check with postman for now
 app.get("/profile/:id", (req, res) => {
   const { id } = req.params;
   let intId = Number(id);
-  let found = false;
-  database.users.forEach((user) => {
-    if (user.id === intId) {
-      found = true;
-      return res.json(user);
-    }
-  });
-  if (!found) {
-    res.status(404).json("no such user!");
-  }
+  knex
+    .select("*")
+    .from("users")
+    .where({ id: id })
+    .then((user) => {
+      if (user.length) {
+        res.json(user[0]);
+      } else {
+        res.status(404).json("User not found!");
+      }
+    })
+    .catch((err) => res.status(400).json("error occurred"));
 });
 
 //gets a user id and updates the entry for that user.
