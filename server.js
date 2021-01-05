@@ -78,10 +78,10 @@ app.post("/register", (req, res) => {
   });
 
   knex("users")
+    .returning("*")
     .insert({ name: name, email: email, joined: new Date() })
-    .then((data) => console.log(data));
-
-  res.json(database.users[database.users.length - 1]);
+    .then((response) => res.json(response[0]))
+    .catch((err) => res.status(400).json(err));
 });
 
 //can be implemented in future.
