@@ -87,7 +87,7 @@ app.post("/register", (req, res) => {
 //can be implemented in future. check with postman for now
 app.get("/profile/:id", (req, res) => {
   const { id } = req.params;
-  let intId = Number(id);
+  // let intId = Number(id);
   knex
     .select("*")
     .from("users")
@@ -106,17 +106,18 @@ app.get("/profile/:id", (req, res) => {
 app.put("/image", (req, res) => {
   const { id } = req.body;
   let intId = Number(id);
-  let found = false;
-  database.users.forEach((user) => {
-    if (user.id === intId) {
-      found = true;
-      user.entries++;
-      return res.json(user.entries);
-    }
-  });
-  if (!found) {
-    res.status(404).json("no such user!");
-  }
+  knex("users")
+    .where("id", "=", id)
+    .increment("entries", 1)
+    .returning("entries")
+    .then((count) => {
+      if (count.length) {
+        res.json(count[0]);
+      } else {
+        res.status(404).json("Unable to get count");
+      }
+    })
+    .catch((err) => res.status(400).json("error!"));
 });
 
 app.listen(5000, () => {
