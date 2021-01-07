@@ -59,15 +59,28 @@ app.get("/", (req, res) => {
 });
 
 app.post("/signin", (req, res) => {
-  console.log(req.body);
-  if (
-    req.body.email === database.users[database.users.length - 1].email &&
-    req.body.password === database.users[database.users.length - 1].password
-  ) {
-    res.json(database.users[database.users.length - 1]);
-  } else {
-    res.status(400).json("error!");
-  }
+  knex
+    .select("email", "hash")
+    .from("login")
+    .where("email", "=", req.body.email)
+    .then((data) => {
+      bcrypt.compare(req.body.password, data[0].hash, (err, result) => {
+        if (result) {
+          knex
+            .select("*")
+            .from("users")
+            .where("email", "=", req.body.email)
+            .then((data) => {
+              res.status(200).json(data[0]);
+            });
+        } else {
+          res.status(400).json("Wrong credentials!");
+        }
+      });
+    })
+    .catch((err) => {
+      res.status(400).json("error");
+    });
 });
 
 app.post("/register", (req, res) => {
@@ -78,10 +91,13 @@ app.post("/register", (req, res) => {
       .transaction((trx) => {
         if (email.length && name.length && password.length) {
           console.log(hash);
-          trx.insert({
+          trx
+            .insert({
               hash: hash,
               email: email,
-            }).into("login").returning("email")
+            })
+            .into("login")
+            .returning("email")
             .then((loginEmail) => {
               console.log(loginEmail);
               return trx("users")
