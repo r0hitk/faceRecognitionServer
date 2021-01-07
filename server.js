@@ -26,36 +26,13 @@ knex
 app.use(cors());
 app.use(express.json());
 
-const database = {
-  users: [
-    {
-      id: 123,
-      name: "Rohit",
-      email: "rohit@gmail.com",
-      password: "cookies",
-      entries: 0,
-      joined: new Date(),
-    },
-    {
-      id: 143,
-      name: "Ankit",
-      email: "ankit@gmail.com",
-      password: "bananas",
-      entries: 0,
-      joined: new Date(),
-    },
-  ],
-  login: [
-    {
-      id: 123,
-      hash: "",
-      email: "rohit@gmail.com",
-    },
-  ],
-};
-
 app.get("/", (req, res) => {
-  res.send(database.users);
+  knex
+    .select("*")
+    .from("users")
+    .then((data) => {
+      res.status(200).json(data);
+    });
 });
 
 app.post("/signin", (req, res) => {
