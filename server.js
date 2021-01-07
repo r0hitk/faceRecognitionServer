@@ -74,14 +74,35 @@ app.post("/register", (req, res) => {
   const { email, name, password } = req.body;
 
   bcrypt.hash(password, saltRounds, (err, hash) => {
-    console.log(hash);
+    knex
+      .transaction((trx) => {
+        if (email.length && name.length && password.length) {
+          console.log(hash);
+          trx.insert({
+              hash: hash,
+              email: email,
+            }).into("login").returning("email")
+            .then((loginEmail) => {
+              console.log(loginEmail);
+              return trx("users")
+                .returning("*")
+                .insert({
+                  name: name,
+                  email: loginEmail[0],
+                  joined: new Date(),
+                })
+                .then((user) => {
+                  res.json(user[0]);
+                });
+            })
+            .then(trx.commit)
+            .catch(trx.rollback);
+        } else {
+          throw new Error("error");
+        }
+      })
+      .catch((err) => res.status(400).json(err));
   });
-
-  knex("users")
-    .returning("*")
-    .insert({ name: name, email: email, joined: new Date() })
-    .then((response) => res.json(response[0]))
-    .catch((err) => res.status(400).json(err));
 });
 
 //can be implemented in future. check with postman for now
