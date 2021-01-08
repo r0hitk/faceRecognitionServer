@@ -56,7 +56,7 @@ app.post("/signin", (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(400).json("error");
+      res.status(400).json("Unable to login");
     });
 });
 
