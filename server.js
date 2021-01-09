@@ -37,7 +37,7 @@ app.post("/register", (req, res) => {
   register.handleRegister(req, res, knex, bcrypt).catch(consol.log());
 });
 
-//can be implemented in future. check with postman for now
+//can be implemented in future. validate with postman for now
 app.get("/profile/:id", (req, res) => {
   profile.getProfile(req, res, knex);
 });
