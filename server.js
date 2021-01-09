@@ -17,7 +17,7 @@ const knex = require("knex")({
   },
 });
 
-app.use(cors());
+//app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
