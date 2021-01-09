@@ -34,7 +34,7 @@ app.post("/signin", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-  register.handleRegister(req, res, knex, bcrypt);
+  register.handleRegister(req, res, knex, bcrypt).catch(consol.log());
 });
 
 //can be implemented in future. check with postman for now
@@ -47,6 +47,8 @@ app.put("/image", (req, res) => {
   image.handleImage(req, res, knex);
 });
 
-app.listen(5000, () => {
-  console.log("Server at 5000 is running.");
+const PORT = process.env.PORT;
+
+app.listen(process.env.PORT, () => {
+  console.log(`Server at ${PORT} is running.`);
 });

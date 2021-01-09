@@ -33,7 +33,7 @@ const handleRegister = (req, res, knex, bcrypt) => {
         .catch((err) => res.status(400).json(err));
     });
   } else {
-    throw new Error("error");
+    res.status(400).json("Unable to register");
   }
 };
 
