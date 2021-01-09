@@ -21,12 +21,16 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  knex
+  
+  console.log("Server is running.");
+
+  /*  knex
     .select("*")
     .from("users")
     .then((data) => {
       res.status(200).json(data);
     });
+    */
 });
 
 app.post("/signin", (req, res) => {
