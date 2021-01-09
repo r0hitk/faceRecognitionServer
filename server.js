@@ -21,7 +21,6 @@ const knex = require("knex")({
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  
   console.log("Server is running.");
 
   /*  knex
@@ -51,8 +50,4 @@ app.put("/image", (req, res) => {
   image.handleImage(req, res, knex);
 });
 
-const PORT = process.env.PORT;
-
-app.listen(process.env.PORT, () => {
-  console.log(`Server at ${PORT} is running.`);
-});
+module.exports = app;
