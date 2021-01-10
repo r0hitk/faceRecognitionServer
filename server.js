@@ -9,12 +9,10 @@ const profile = require("./Controllers/profile");
 
 const knex = require("knex")({
   client: "pg",
-  connection: {
-    host: "127.0.0.1",
-    user: "postgres",
-    password: "faceapp",
-    database: "postgres",
-  },
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
 app.use(cors());
