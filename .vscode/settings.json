@@ -1,4 +1,0 @@
-{
-    "appService.defaultWebAppToDeploy": "/subscriptions/eecb85e1-21de-4dfa-a78c-b58cdd69b8a4/resourceGroups/wheres-the-face-rg/providers/Microsoft.Web/sites/wheres-the-face",
-    "appService.deploySubpath": "."
-}
