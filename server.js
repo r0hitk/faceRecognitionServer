@@ -9,17 +9,18 @@ const profile = require("./Controllers/profile");
 
 const knex = require("knex")({
   client: "pg",
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
+  connection: {
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false,
+    },
+  },
 });
 
 app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  
   console.log("Server is running.");
   res.status(200).json("Working.");
 
