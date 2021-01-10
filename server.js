@@ -38,7 +38,7 @@ app.post("/signin", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-  register.handleRegister(req, res, knex, bcrypt).catch(consol.log());
+  register.handleRegister(req, res, knex, bcrypt);
 });
 
 //can be implemented in future. validate with postman for now
