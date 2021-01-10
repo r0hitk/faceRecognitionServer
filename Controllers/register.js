@@ -3,7 +3,9 @@ const handleRegister = (req, res, knex, bcrypt) => {
   const saltRounds = 10;
 
   if (email.length && name.length && password.length) {
+    console.log(email,name,password);
     bcrypt.hash(password, saltRounds, (err, hash) => {
+      console.log(hash);
       knex
         .transaction((trx) => {
           console.log(hash);
