@@ -23,6 +23,7 @@ app.use(express.json());
 app.get("/", (req, res) => {
   
   console.log("Server is running.");
+  res.status(200).json("Working.");
 
   /*  knex
     .select("*")
